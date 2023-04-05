@@ -1,10 +1,8 @@
 # API Rest da aplicação Adopet
 
-Projeto que representa o back-end da aplicação Adopet, uma aplicação web que facilita a adoção de pets.
-
 Após alguns testes com protótipos feitos pelo time de UX/UI de uma empresa, foi requisitada a primeira versão da Adopet, uma plataforma para conectar pessoas que desejam adotar animais de estimação e abrigos. A plataforma deve permitir ao usuário criar um perfil, visualizar os pets na fila de adoção. Por sua vez, os abrigos/ONGs podem criar um perfil para os pets e concretizar a adoção.
 
-Os times de frontend e UI já possuem o layout e nas telas. Para o backend, as principais funcionalidades a serem implementadas são:
+Os times de frontend e UI já possuem o layout e as telas. Para o backend, as principais funcionalidades a serem implementadas são:
 
     API com rotas implementadas segundo o padrão REST;
     Validações feitas conforme as regras de negócio;
