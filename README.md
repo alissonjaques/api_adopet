@@ -19,4 +19,4 @@ Os times de frontend e UI já possuem o layout e nas telas. Para o backend, as p
 | :label: Tecnologias | java, spring framework, jpa, hibernate, rest
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![alt text](https://github.com/alissonjaques/alura-space/blob/main/imagens/home.png#vitrinedev)
+![alt text](https://github.com/alissonjaques/imagens-aplicacoes/blob/main/api-adopet/principal.png#vitrinedev)
