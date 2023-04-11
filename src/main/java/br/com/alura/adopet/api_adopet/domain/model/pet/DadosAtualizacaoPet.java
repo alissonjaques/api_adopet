@@ -1,6 +1,6 @@
 package br.com.alura.adopet.api_adopet.domain.model.pet;
 
-import br.com.alura.adopet.api_adopet.domain.model.abrigo.DadosAtualizacaoAbrigo;
+import br.com.alura.adopet.api_adopet.domain.model.abrigo.Abrigo;
 import jakarta.validation.constraints.NotNull;
 
 public record DadosAtualizacaoPet(
@@ -10,5 +10,5 @@ public record DadosAtualizacaoPet(
         String descricao,
         Integer idade,
         String imagem,
-        DadosAtualizacaoAbrigo abrigo) {
+        Abrigo abrigo) {
 }

@@ -5,5 +5,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetRepository extends JpaRepository<Pet, Long> { // tipo objeto / tipo chave primária
-    Page<Pet> findAllByAtivoTrue(Pageable paginacao);
+    Page<Pet> findAllByAtivoTrueAndAdotadoFalse(Pageable paginacao);
 }

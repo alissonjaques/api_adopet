@@ -1,7 +1,6 @@
 package br.com.alura.adopet.api_adopet.domain.model.pet;
 
 import br.com.alura.adopet.api_adopet.domain.model.abrigo.Abrigo;
-import br.com.alura.adopet.api_adopet.domain.model.abrigo.AbrigoRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -39,7 +38,7 @@ public class Pet {
 
     public void atualizarInformacoes(DadosAtualizacaoPet dados) {
         if (dados.abrigo() != null) {
-            this.abrigo.atualizarInformacoes(dados.abrigo());
+            this.abrigo = dados.abrigo();
         }
         if (dados.nome() != null) {
             this.nome = dados.nome();

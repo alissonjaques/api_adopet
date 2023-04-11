@@ -1,10 +1,7 @@
 package br.com.alura.adopet.api_adopet.controller;
 
-import br.com.alura.adopet.api_adopet.domain.model.abrigo.AbrigoRepository;
 import br.com.alura.adopet.api_adopet.domain.model.pet.*;
 import br.com.alura.adopet.api_adopet.domain.model.pet.DadosCadastroPet;
-import br.com.alura.adopet.api_adopet.infra.exception.TratadorDeErros;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,12 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("pets")
-@JsonIgnoreProperties
 public class PetController {
     @Autowired
     private PetRepository repository;
-    @Autowired
-    AbrigoRepository abrigoRepository;
 
     @PostMapping
     @Transactional
@@ -34,15 +28,18 @@ public class PetController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemPet>> listar(@PageableDefault(size = 10, page = 0, sort = {"nome"})
+    public ResponseEntity<Page<DadosListagemPet>> listar(@PageableDefault(size = 9, page = 0, sort = {"nome"})
                                                             Pageable paginacao){
-        var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemPet::new);
+        var page = repository.findAllByAtivoTrueAndAdotadoFalse(paginacao).map(DadosListagemPet::new);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity listarPorId(@PathVariable Long id){
         var pet = repository.getReferenceById(id);
+        if(pet.getAdotado()){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(new DadosDetalhamentoPet(pet));
     }
 
