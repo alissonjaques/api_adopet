@@ -1,5 +1,6 @@
 package br.com.alura.adopet.api_adopet.domain.model.tutor;
 
+import br.com.alura.adopet.api_adopet.domain.model.enums.Perfil;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,9 +21,11 @@ public class Tutor {
     private String email;
     private String senha;
     private Boolean ativo;
-
+    @Enumerated(EnumType.STRING)
+    private Perfil perfil;
     public Tutor(DadosCadastroTutor dados) {
         this.ativo = true;
+        this.perfil = Perfil.TUTOR;
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = dados.senha();

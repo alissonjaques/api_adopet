@@ -12,6 +12,10 @@ public record DadosCadastroAbrigo(
         @NotBlank(message = "{email.obrigatorio}")
         @Email(message = "{email.invalido}")
         String email,
+        @NotBlank
+        String senha,
+        @NotBlank
+        String confirmacaoSenha,
         @NotBlank(message = "{telefone.obrigatorio}")
         String telefone,
         String sobre,
