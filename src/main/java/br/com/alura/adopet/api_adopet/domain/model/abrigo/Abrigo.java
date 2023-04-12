@@ -1,6 +1,7 @@
 package br.com.alura.adopet.api_adopet.domain.model.abrigo;
 
 import br.com.alura.adopet.api_adopet.domain.model.endereco.Endereco;
+import br.com.alura.adopet.api_adopet.domain.model.enums.Perfil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -20,15 +21,20 @@ public class Abrigo {
     private Boolean ativo;
     private String nome;
     private String email;
+    private String senha;
     private String telefone;
     private String sobre;
     @Embedded
     private Endereco endereco;
+    @Enumerated(EnumType.STRING)
+    private Perfil perfil;
 
     public Abrigo(DadosCadastroAbrigo dados) {
         this.ativo = true;
+        this.perfil = Perfil.ABRIGO;
         this.nome = dados.nome();
         this.email = dados.email();
+        this.senha = dados.senha();
         this.telefone = dados.telefone();
         this.sobre = dados.sobre();
         this.endereco = new Endereco(dados.endereco());
@@ -37,6 +43,12 @@ public class Abrigo {
     public void atualizarInformacoes(DadosAtualizacaoAbrigo dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();
+        }
+        if (dados.email() != null) {
+            this.email = dados.email();
+        }
+        if (dados.senha() != null) {
+            this.senha = dados.senha();
         }
         if (dados.telefone() != null) {
             this.telefone = dados.telefone();

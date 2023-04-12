@@ -20,6 +20,9 @@ public class AbrigoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroAbrigo dados, UriComponentsBuilder uriBuilder) {
+        if (!dados.senha().equals(dados.confirmacaoSenha())) {
+            return ResponseEntity.badRequest().body("A senha e sua confirmação não conferem!");
+        }
         var abrigo = new Abrigo(dados);
         repository.save(abrigo);
         var uri = uriBuilder.path("/abrigos/{id}").buildAndExpand(abrigo.getId()).toUri();
