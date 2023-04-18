@@ -1,6 +1,6 @@
 package br.com.alura.adopet.api_adopet.domain.model.pet;
 
-import br.com.alura.adopet.api_adopet.domain.model.abrigo.Abrigo;
+import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,4 +14,4 @@ public record DadosCadastroPet(
         @NotBlank
         String imagem,
         @NotNull()
-        Abrigo abrigo) {}
+        Usuario usuario) {}

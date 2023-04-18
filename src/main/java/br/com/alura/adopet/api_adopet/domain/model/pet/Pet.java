@@ -1,6 +1,6 @@
 package br.com.alura.adopet.api_adopet.domain.model.pet;
 
-import br.com.alura.adopet.api_adopet.domain.model.abrigo.Abrigo;
+import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ public class Pet {
     private Long id;
     private Boolean ativo;
     @ManyToOne
-    private Abrigo abrigo;
+    private Usuario usuario;
     private String nome;
     private String descricao;
     private Boolean adotado;
@@ -28,7 +28,7 @@ public class Pet {
 
     public Pet(DadosCadastroPet dados) {
         this.ativo = true;
-        this.abrigo = dados.abrigo();
+        this.usuario = dados.usuario();
         this.nome = dados.nome();
         this.descricao = dados.descricao();
         this.adotado = false;
@@ -37,8 +37,8 @@ public class Pet {
     }
 
     public void atualizarInformacoes(DadosAtualizacaoPet dados) {
-        if (dados.abrigo() != null) {
-            this.abrigo = dados.abrigo();
+        if (dados.usuario() != null) {
+            this.usuario = dados.usuario();
         }
         if (dados.nome() != null) {
             this.nome = dados.nome();

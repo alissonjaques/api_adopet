@@ -38,7 +38,6 @@ public class AdocaoController {
     @GetMapping
     public ResponseEntity<Page<DadosListagemAdocao>> listar(@PageableDefault(size = 10, page = 0, sort = {"pet"})
                                                          Pageable paginacao){
-        System.out.println("aqui");
         var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemAdocao::new);
         return ResponseEntity.ok(page);
     }

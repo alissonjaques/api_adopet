@@ -1,1 +1,0 @@
-ALTER TABLE abrigos ADD senha varchar(100) not null AFTER email
