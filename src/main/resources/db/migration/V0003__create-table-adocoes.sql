@@ -9,5 +9,5 @@ create table adocoes(
     KEY `pet_id_idx` (`pet_id`),
     CONSTRAINT `pet_id` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
     KEY `tutor_id_idx` (`tutor_id`),
-    CONSTRAINT `tutor_id` FOREIGN KEY (`tutor_id`) REFERENCES `tutores` (`id`)
+    CONSTRAINT `tutor_id` FOREIGN KEY (`tutor_id`) REFERENCES `usuarios` (`id`)
 );

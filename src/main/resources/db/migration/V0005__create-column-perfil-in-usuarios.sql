@@ -1,0 +1,1 @@
+ALTER TABLE usuarios ADD perfil varchar(100) not null AFTER ativo;

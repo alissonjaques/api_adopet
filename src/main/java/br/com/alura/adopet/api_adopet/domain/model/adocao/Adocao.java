@@ -1,7 +1,7 @@
 package br.com.alura.adopet.api_adopet.domain.model.adocao;
 
+import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
 import br.com.alura.adopet.api_adopet.domain.model.pet.Pet;
-import br.com.alura.adopet.api_adopet.domain.model.tutor.Tutor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,7 +23,7 @@ public class Adocao {
     @OneToOne
     private Pet pet;
     @ManyToOne
-    private Tutor tutor;
+    private Usuario tutor;
     private LocalDateTime data;
 
     public Adocao(DadosCadastroAdocao dados) {
@@ -45,5 +45,6 @@ public class Adocao {
 
     public void excluir() {
         this.ativo = false;
+        getPet().cancelarAdocao();
     }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE usuarios ADD senha varchar(100) not null AFTER email
