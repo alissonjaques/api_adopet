@@ -1,7 +1,9 @@
 package br.com.alura.adopet.api_adopet.controller;
 
+import br.com.alura.adopet.api_adopet.domain.model.enums.Perfil;
 import br.com.alura.adopet.api_adopet.domain.model.pet.*;
 import br.com.alura.adopet.api_adopet.domain.model.pet.DadosCadastroPet;
+import br.com.alura.adopet.api_adopet.domain.model.usuario.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,10 +19,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class PetController {
     @Autowired
     private PetRepository repository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroPet dados, UriComponentsBuilder uriBuilder) {
+        var abrigo = usuarioRepository.getReferenceById(dados.usuario().getId());
+
+        if(!abrigo.getAtivo()){
+            return ResponseEntity.badRequest().body("Não foi possível cadastrar o pet," +
+                    " abrigo não encontrado.");
+        }
+
+        if(abrigo.getPerfil().equals(Perfil.TUTOR)){
+            return ResponseEntity.badRequest().body("Não foi possível cadastrar o pet," +
+                    " pois o pet deve pertencer a um abrigo e não a um tutor.");
+        }
+
         var pet = new Pet(dados);
         repository.save(pet);
         var uri = uriBuilder.path("/pets/{id}").buildAndExpand(pet.getId()).toUri();
