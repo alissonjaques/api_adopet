@@ -45,5 +45,6 @@ public class Adocao {
 
     public void excluir() {
         this.ativo = false;
+        getPet().cancelarAdocao();
     }
 }

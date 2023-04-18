@@ -60,5 +60,11 @@ public class Pet {
 
     public void adotar() {
         this.adotado = true;
+        this.ativo = false;
+    }
+
+    public void cancelarAdocao() {
+        this.adotado = false;
+        this.ativo = true;
     }
 }
