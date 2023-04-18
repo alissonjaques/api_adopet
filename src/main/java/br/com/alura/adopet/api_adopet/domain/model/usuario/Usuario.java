@@ -1,4 +1,4 @@
-package br.com.alura.adopet.api_adopet.domain.model.abrigo;
+package br.com.alura.adopet.api_adopet.domain.model.usuario;
 
 import br.com.alura.adopet.api_adopet.domain.model.endereco.Endereco;
 import br.com.alura.adopet.api_adopet.domain.model.enums.Perfil;
@@ -8,13 +8,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "abrigos")
-@Entity(name = "Abrigo")
+@Table(name = "usuarios")
+@Entity(name = "Usuario")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Abrigo {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,9 +29,9 @@ public class Abrigo {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
-    public Abrigo(DadosCadastroAbrigo dados) {
+    public Usuario(DadosCadastroUsuario dados) {
         this.ativo = true;
-        this.perfil = Perfil.ABRIGO;
+        this.perfil = dados.perfil();
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = dados.senha();
@@ -40,7 +40,10 @@ public class Abrigo {
         this.endereco = new Endereco(dados.endereco());
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoAbrigo dados) {
+    public void atualizarInformacoes(DadosAtualizacaoUsuario dados) {
+        if (dados.perfil() != null) {
+            this.perfil = dados.perfil();
+        }
         if (dados.nome() != null) {
             this.nome = dados.nome();
         }

@@ -1,4 +1,4 @@
-create table abrigos(
+create table usuarios(
     id bigint not null auto_increment,
     ativo tinyint,
     nome varchar(100) not null,

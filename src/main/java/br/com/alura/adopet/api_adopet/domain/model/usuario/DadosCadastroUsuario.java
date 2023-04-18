@@ -1,12 +1,15 @@
-package br.com.alura.adopet.api_adopet.domain.model.abrigo;
+package br.com.alura.adopet.api_adopet.domain.model.usuario;
 
+import br.com.alura.adopet.api_adopet.domain.model.enums.Perfil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import br.com.alura.adopet.api_adopet.domain.model.endereco.DadosEndereco;
 
-public record DadosCadastroAbrigo(
+public record DadosCadastroUsuario(
+        @NotNull
+        Perfil perfil,
         @NotBlank(message = "{nome.obrigatorio}")
         String nome,
         @NotBlank(message = "{email.obrigatorio}")
