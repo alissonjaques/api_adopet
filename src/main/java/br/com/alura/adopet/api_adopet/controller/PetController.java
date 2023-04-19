@@ -26,17 +26,14 @@ public class PetController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroPet dados, UriComponentsBuilder uriBuilder) {
         var abrigo = usuarioRepository.getReferenceById(dados.usuario().getId());
-
         if(!abrigo.getAtivo()){
             return ResponseEntity.badRequest().body("Não foi possível cadastrar o pet," +
                     " abrigo não encontrado.");
         }
-
         if(abrigo.getPerfil().equals(Perfil.TUTOR)){
             return ResponseEntity.badRequest().body("Não foi possível cadastrar o pet," +
                     " pois o pet deve pertencer a um abrigo e não a um tutor.");
         }
-
         var pet = new Pet(dados);
         repository.save(pet);
         var uri = uriBuilder.path("/pets/{id}").buildAndExpand(pet.getId()).toUri();
