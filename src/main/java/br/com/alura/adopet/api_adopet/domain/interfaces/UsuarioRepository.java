@@ -1,5 +1,6 @@
-package br.com.alura.adopet.api_adopet.domain.model.usuario;
+package br.com.alura.adopet.api_adopet.domain.interfaces;
 
+import br.com.alura.adopet.api_adopet.domain.model.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

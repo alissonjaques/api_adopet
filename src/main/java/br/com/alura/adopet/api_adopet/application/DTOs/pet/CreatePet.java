@@ -1,10 +1,10 @@
-package br.com.alura.adopet.api_adopet.domain.model.pet;
+package br.com.alura.adopet.api_adopet.application.DTOs.pet;
 
-import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
+import br.com.alura.adopet.api_adopet.domain.model.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record DadosCadastroPet(
+public record CreatePet(
         @NotBlank()
         String nome,
         @NotBlank()

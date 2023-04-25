@@ -1,6 +1,6 @@
 package br.com.alura.adopet.api_adopet.infra.security;
 
-import br.com.alura.adopet.api_adopet.domain.model.usuario.UsuarioRepository;
+import br.com.alura.adopet.api_adopet.domain.interfaces.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,9 +1,9 @@
-package br.com.alura.adopet.api_adopet.domain.model.endereco;
+package br.com.alura.adopet.api_adopet.application.DTOs.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record DadosEndereco(
+public record Endereco(
         @NotBlank
         String logradouro,
         @NotBlank

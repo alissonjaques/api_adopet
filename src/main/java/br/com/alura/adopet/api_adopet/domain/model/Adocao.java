@@ -1,7 +1,7 @@
-package br.com.alura.adopet.api_adopet.domain.model.adocao;
+package br.com.alura.adopet.api_adopet.domain.model;
 
-import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
-import br.com.alura.adopet.api_adopet.domain.model.pet.Pet;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.CreateAdocao;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Table(name = "adocoes")
-@Entity(name = "Adocao")
+@Entity(name = "adocao")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,14 +26,14 @@ public class Adocao {
     private Usuario tutor;
     private LocalDateTime data;
 
-    public Adocao(DadosCadastroAdocao dados) {
+    public Adocao(CreateAdocao dados) {
         this.ativo = true;
         this.data = LocalDateTime.now();
         this.pet = dados.pet();
         this.tutor = dados.tutor();
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoAdocao dados) {
+    public void atualizarInformacoes(UpdateAdocao dados) {
         if (dados.pet() != null) {
             this.pet = dados.pet();
         }

@@ -1,4 +1,4 @@
-package br.com.alura.adopet.api_adopet.domain.model.endereco;
+package br.com.alura.adopet.api_adopet.domain.model;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Endereco {
     private String cidade;
     private String uf;
 
-    public Endereco(DadosEndereco endereco) {
+    public Endereco(br.com.alura.adopet.api_adopet.application.DTOs.endereco.Endereco endereco) {
         this.logradouro = endereco.logradouro();
         this.bairro = endereco.bairro();
         this.cep = endereco.cep();
@@ -28,7 +28,7 @@ public class Endereco {
         this.uf = endereco.uf();
     }
 
-    public void atualizarInformacoes(DadosEndereco dados) {
+    public void atualizarInformacoes(br.com.alura.adopet.api_adopet.application.DTOs.endereco.Endereco dados) {
         if (dados.logradouro() != null) {
             this.logradouro = dados.logradouro();
         }

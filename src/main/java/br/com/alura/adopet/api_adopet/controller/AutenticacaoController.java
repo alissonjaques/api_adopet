@@ -1,7 +1,7 @@
 package br.com.alura.adopet.api_adopet.controller;
 
-import br.com.alura.adopet.api_adopet.domain.model.usuario.DadosAutenticacao;
-import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
+import br.com.alura.adopet.api_adopet.application.DTOs.usuario.Autenticacao;
+import br.com.alura.adopet.api_adopet.domain.model.Usuario;
 import br.com.alura.adopet.api_adopet.infra.security.DadosTokenJWT;
 import br.com.alura.adopet.api_adopet.infra.security.TokenService;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
+    public ResponseEntity efetuarLogin(@RequestBody @Valid Autenticacao dados){
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
         var authentication = manager.authenticate(authenticationToken);
         var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
