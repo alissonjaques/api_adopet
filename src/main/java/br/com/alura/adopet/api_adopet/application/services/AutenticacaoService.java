@@ -1,5 +1,6 @@
-package br.com.alura.adopet.api_adopet.domain.model.usuario;
+package br.com.alura.adopet.api_adopet.application.services;
 
+import br.com.alura.adopet.api_adopet.domain.interfaces.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

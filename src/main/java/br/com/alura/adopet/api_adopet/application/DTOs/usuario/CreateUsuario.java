@@ -1,13 +1,13 @@
-package br.com.alura.adopet.api_adopet.domain.model.usuario;
+package br.com.alura.adopet.api_adopet.application.DTOs.usuario;
 
-import br.com.alura.adopet.api_adopet.domain.model.enums.Perfil;
+import br.com.alura.adopet.api_adopet.domain.enums.Perfil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import br.com.alura.adopet.api_adopet.domain.model.endereco.DadosEndereco;
+import br.com.alura.adopet.api_adopet.application.DTOs.endereco.Endereco;
 
-public record DadosCadastroUsuario(
+public record CreateUsuario(
         @NotNull
         Perfil perfil,
         @NotBlank(message = "{nome.obrigatorio}")
@@ -24,4 +24,4 @@ public record DadosCadastroUsuario(
         String sobre,
         @NotNull(message = "{endereco.obrigatorio}")
         @Valid
-        DadosEndereco endereco) {}
+        Endereco endereco) {}

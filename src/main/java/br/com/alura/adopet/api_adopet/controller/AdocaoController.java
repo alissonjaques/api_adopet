@@ -1,7 +1,12 @@
 package br.com.alura.adopet.api_adopet.controller;
 
-import br.com.alura.adopet.api_adopet.domain.model.adocao.*;
-import br.com.alura.adopet.api_adopet.domain.model.pet.PetRepository;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.CreateAdocao;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.GetAllAdocao;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.GetAdocao;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocao;
+import br.com.alura.adopet.api_adopet.domain.model.Adocao;
+import br.com.alura.adopet.api_adopet.domain.interfaces.AdocaoRepository;
+import br.com.alura.adopet.api_adopet.domain.interfaces.PetRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +27,7 @@ public class AdocaoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroAdocao dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid CreateAdocao dados, UriComponentsBuilder uriBuilder) {
         var pet = petRepository.getReferenceById(dados.pet().getId());
         if(pet.getAdotado()){
             return ResponseEntity.badRequest().body("Não foi possível realizar a adoção," +
@@ -32,28 +37,28 @@ public class AdocaoController {
         var adocao = new Adocao(dados);
         repository.save(adocao);
         var uri = uriBuilder.path("/adocoes/{id}").buildAndExpand(adocao.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoAdocao(adocao));
+        return ResponseEntity.created(uri).body(new GetAdocao(adocao));
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemAdocao>> listar(@PageableDefault(size = 10, page = 0, sort = {"pet"})
+    public ResponseEntity<Page<GetAllAdocao>> listar(@PageableDefault(size = 10, page = 0, sort = {"pet"})
                                                          Pageable paginacao){
-        var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemAdocao::new);
+        var page = repository.findAllByAtivoTrue(paginacao).map(GetAllAdocao::new);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity listarPorId(@PathVariable Long id){
         var adocao = repository.getReferenceById(id);
-        return ResponseEntity.ok(new DadosDetalhamentoAdocao(adocao));
+        return ResponseEntity.ok(new GetAdocao(adocao));
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoAdocao dados) {
+    public ResponseEntity atualizar(@RequestBody @Valid UpdateAdocao dados) {
         var adocao = repository.getReferenceById(dados.id());
         adocao.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new DadosDetalhamentoAdocao(adocao));
+        return ResponseEntity.ok(new GetAdocao(adocao));
     }
 
     @DeleteMapping("/{id}")

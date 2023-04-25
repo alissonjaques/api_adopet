@@ -1,6 +1,6 @@
 package br.com.alura.adopet.api_adopet.infra.security;
 
-import br.com.alura.adopet.api_adopet.domain.model.usuario.Usuario;
+import br.com.alura.adopet.api_adopet.domain.model.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
