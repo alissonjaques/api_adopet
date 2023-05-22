@@ -1,7 +1,7 @@
 package br.com.alura.adopet.api_adopet.domain.model;
 
-import br.com.alura.adopet.api_adopet.application.DTOs.adocao.CreateAdocao;
-import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocao;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.CreateAdocaoDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocaoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,14 +26,14 @@ public class Adocao {
     private Usuario tutor;
     private LocalDateTime data;
 
-    public Adocao(CreateAdocao dados) {
+    public Adocao(CreateAdocaoDTO dados) {
         this.ativo = true;
         this.data = LocalDateTime.now();
         this.pet = dados.pet();
         this.tutor = dados.tutor();
     }
 
-    public void atualizarInformacoes(UpdateAdocao dados) {
+    public void atualizarInformacoes(UpdateAdocaoDTO dados) {
         if (dados.pet() != null) {
             this.pet = dados.pet();
         }

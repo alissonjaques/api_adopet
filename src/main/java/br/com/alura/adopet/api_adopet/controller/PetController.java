@@ -1,12 +1,12 @@
 package br.com.alura.adopet.api_adopet.controller;
 
-import br.com.alura.adopet.api_adopet.application.DTOs.pet.GetAllPet;
-import br.com.alura.adopet.api_adopet.application.DTOs.pet.GetPet;
-import br.com.alura.adopet.api_adopet.application.DTOs.pet.UpdatePet;
+import br.com.alura.adopet.api_adopet.application.DTOs.pet.GetAllPetDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.pet.GetPetDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.pet.UpdatePetDTO;
 import br.com.alura.adopet.api_adopet.domain.enums.Perfil;
 import br.com.alura.adopet.api_adopet.domain.interfaces.PetRepository;
 import br.com.alura.adopet.api_adopet.domain.model.Pet;
-import br.com.alura.adopet.api_adopet.application.DTOs.pet.CreatePet;
+import br.com.alura.adopet.api_adopet.application.DTOs.pet.CreatePetDTO;
 import br.com.alura.adopet.api_adopet.domain.interfaces.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class PetController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid CreatePet dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid CreatePetDTO dados, UriComponentsBuilder uriBuilder) {
         var abrigo = usuarioRepository.getReferenceById(dados.usuario().getId());
         if(!abrigo.getAtivo()){
             return ResponseEntity.badRequest().body("Não foi possível cadastrar o pet," +
@@ -41,13 +41,13 @@ public class PetController {
         var pet = new Pet(dados);
         repository.save(pet);
         var uri = uriBuilder.path("/pets/{id}").buildAndExpand(pet.getId()).toUri();
-        return ResponseEntity.created(uri).body(new GetPet(pet));
+        return ResponseEntity.created(uri).body(new GetPetDTO(pet));
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllPet>> listar(@PageableDefault(size = 9, page = 0, sort = {"nome"})
+    public ResponseEntity<Page<GetAllPetDTO>> listar(@PageableDefault(size = 9, page = 0, sort = {"nome"})
                                                             Pageable paginacao){
-        var page = repository.findAllByAtivoTrueAndAdotadoFalse(paginacao).map(GetAllPet::new);
+        var page = repository.findAllByAtivoTrueAndAdotadoFalse(paginacao).map(GetAllPetDTO::new);
         return ResponseEntity.ok(page);
     }
 
@@ -57,15 +57,15 @@ public class PetController {
         if(pet.getAdotado()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new GetPet(pet));
+        return ResponseEntity.ok(new GetPetDTO(pet));
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid UpdatePet dados) {
+    public ResponseEntity atualizar(@RequestBody @Valid UpdatePetDTO dados) {
         var pet = repository.getReferenceById(dados.id());
         pet.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new GetPet(pet));
+        return ResponseEntity.ok(new GetPetDTO(pet));
     }
 
     @DeleteMapping("/{id}")

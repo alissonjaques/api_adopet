@@ -2,9 +2,9 @@ package br.com.alura.adopet.api_adopet.application.DTOs.usuario;
 
 import br.com.alura.adopet.api_adopet.domain.enums.Perfil;
 import jakarta.validation.constraints.NotNull;
-import br.com.alura.adopet.api_adopet.application.DTOs.endereco.Endereco;
+import br.com.alura.adopet.api_adopet.application.DTOs.endereco.EnderecoDTO;
 
-public record UpdateUsuario(
+public record UpdateUsuarioDTO(
         @NotNull
         Long id,
         Perfil perfil,
@@ -14,5 +14,5 @@ public record UpdateUsuario(
         String confirmacaoSenha,
         String telefone,
         String sobre,
-        Endereco endereco) {
+        EnderecoDTO endereco) {
 }

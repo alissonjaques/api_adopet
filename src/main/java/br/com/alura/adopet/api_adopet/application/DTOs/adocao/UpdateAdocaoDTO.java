@@ -4,7 +4,7 @@ import br.com.alura.adopet.api_adopet.domain.model.Usuario;
 import br.com.alura.adopet.api_adopet.domain.model.Pet;
 import jakarta.validation.constraints.NotNull;
 
-public record UpdateAdocao(
+public record UpdateAdocaoDTO(
         @NotNull
         Long id,
         Pet pet,

@@ -5,9 +5,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import br.com.alura.adopet.api_adopet.application.DTOs.endereco.Endereco;
+import br.com.alura.adopet.api_adopet.application.DTOs.endereco.EnderecoDTO;
 
-public record CreateUsuario(
+public record CreateUsuarioDTO(
         @NotNull
         Perfil perfil,
         @NotBlank(message = "{nome.obrigatorio}")
@@ -24,4 +24,4 @@ public record CreateUsuario(
         String sobre,
         @NotNull(message = "{endereco.obrigatorio}")
         @Valid
-        Endereco endereco) {}
+        EnderecoDTO endereco) {}
