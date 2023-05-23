@@ -7,6 +7,7 @@ import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocaoDTO;
 import br.com.alura.adopet.api_adopet.domain.model.Adocao;
 import br.com.alura.adopet.api_adopet.domain.interfaces.AdocaoRepository;
 import br.com.alura.adopet.api_adopet.domain.interfaces.PetRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("adocoes")
+@SecurityRequirement(name = "bearer-key")
 public class AdocaoController {
     @Autowired
     private AdocaoRepository repository;

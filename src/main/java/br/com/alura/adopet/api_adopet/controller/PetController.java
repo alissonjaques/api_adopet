@@ -8,6 +8,7 @@ import br.com.alura.adopet.api_adopet.domain.interfaces.PetRepository;
 import br.com.alura.adopet.api_adopet.domain.model.Pet;
 import br.com.alura.adopet.api_adopet.application.DTOs.pet.CreatePetDTO;
 import br.com.alura.adopet.api_adopet.domain.interfaces.UsuarioRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("pets")
+@SecurityRequirement(name = "bearer-key")
 public class PetController {
     @Autowired
     private PetRepository repository;
