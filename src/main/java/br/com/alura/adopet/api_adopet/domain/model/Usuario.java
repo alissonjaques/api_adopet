@@ -1,8 +1,8 @@
 package br.com.alura.adopet.api_adopet.domain.model;
 
 import br.com.alura.adopet.api_adopet.domain.enums.Perfil;
-import br.com.alura.adopet.api_adopet.application.DTOs.usuario.UpdateUsuario;
-import br.com.alura.adopet.api_adopet.application.DTOs.usuario.CreateUsuario;
+import br.com.alura.adopet.api_adopet.application.DTOs.usuario.UpdateUsuarioDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.usuario.CreateUsuarioDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,7 +34,7 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
-    public Usuario(CreateUsuario dados) {
+    public Usuario(CreateUsuarioDTO dados) {
         this.ativo = true;
         this.perfil = dados.perfil();
         this.nome = dados.nome();
@@ -45,7 +45,13 @@ public class Usuario implements UserDetails {
         this.endereco = new Endereco(dados.endereco());
     }
 
-    public void atualizarInformacoes(UpdateUsuario dados) {
+    public Usuario(Long id, String nome, String email){
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+    }
+
+    public void atualizarInformacoes(UpdateUsuarioDTO dados) {
         if (dados.perfil() != null) {
             this.perfil = dados.perfil();
         }
@@ -106,5 +112,9 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

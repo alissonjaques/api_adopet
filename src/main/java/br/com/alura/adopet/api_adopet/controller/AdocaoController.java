@@ -1,12 +1,14 @@
 package br.com.alura.adopet.api_adopet.controller;
 
-import br.com.alura.adopet.api_adopet.application.DTOs.adocao.CreateAdocao;
-import br.com.alura.adopet.api_adopet.application.DTOs.adocao.GetAllAdocao;
-import br.com.alura.adopet.api_adopet.application.DTOs.adocao.GetAdocao;
-import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocao;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.CreateAdocaoDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.GetAllAdocaoDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.GetAdocaoDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocaoDTO;
 import br.com.alura.adopet.api_adopet.domain.model.Adocao;
 import br.com.alura.adopet.api_adopet.domain.interfaces.AdocaoRepository;
 import br.com.alura.adopet.api_adopet.domain.interfaces.PetRepository;
+import br.com.alura.adopet.api_adopet.domain.services.AdocaoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,46 +21,42 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("adocoes")
+@SecurityRequirement(name = "bearer-key")
 public class AdocaoController {
     @Autowired
     private AdocaoRepository repository;
     @Autowired
     private PetRepository petRepository;
+    @Autowired
+    private AdocaoService adocaoService;
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid CreateAdocao dados, UriComponentsBuilder uriBuilder) {
-        var pet = petRepository.getReferenceById(dados.pet().getId());
-        if(pet.getAdotado()){
-            return ResponseEntity.badRequest().body("Não foi possível realizar a adoção," +
-                    " pois o pet informado já foi adotado.");
-        }
-        pet.adotar();
-        var adocao = new Adocao(dados);
-        repository.save(adocao);
+    public ResponseEntity cadastrar(@RequestBody @Valid CreateAdocaoDTO dados, UriComponentsBuilder uriBuilder) {
+        var adocao = adocaoService.cadastrar(dados);
         var uri = uriBuilder.path("/adocoes/{id}").buildAndExpand(adocao.getId()).toUri();
-        return ResponseEntity.created(uri).body(new GetAdocao(adocao));
+        return ResponseEntity.created(uri).body(new GetAdocaoDTO(adocao));
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllAdocao>> listar(@PageableDefault(size = 10, page = 0, sort = {"pet"})
+    public ResponseEntity<Page<GetAllAdocaoDTO>> listar(@PageableDefault(size = 10, page = 0, sort = {"pet"})
                                                          Pageable paginacao){
-        var page = repository.findAllByAtivoTrue(paginacao).map(GetAllAdocao::new);
+        var page = repository.findAllByAtivoTrue(paginacao).map(GetAllAdocaoDTO::new);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity listarPorId(@PathVariable Long id){
         var adocao = repository.getReferenceById(id);
-        return ResponseEntity.ok(new GetAdocao(adocao));
+        return ResponseEntity.ok(new GetAdocaoDTO(adocao));
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid UpdateAdocao dados) {
+    public ResponseEntity atualizar(@RequestBody @Valid UpdateAdocaoDTO dados) {
         var adocao = repository.getReferenceById(dados.id());
         adocao.atualizarInformacoes(dados);
-        return ResponseEntity.ok(new GetAdocao(adocao));
+        return ResponseEntity.ok(new GetAdocaoDTO(adocao));
     }
 
     @DeleteMapping("/{id}")

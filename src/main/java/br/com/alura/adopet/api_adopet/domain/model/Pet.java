@@ -1,7 +1,7 @@
 package br.com.alura.adopet.api_adopet.domain.model;
 
-import br.com.alura.adopet.api_adopet.application.DTOs.pet.UpdatePet;
-import br.com.alura.adopet.api_adopet.application.DTOs.pet.CreatePet;
+import br.com.alura.adopet.api_adopet.application.DTOs.pet.UpdatePetDTO;
+import br.com.alura.adopet.api_adopet.application.DTOs.pet.CreatePetDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -27,7 +27,7 @@ public class Pet {
     private Integer idade;
     private String imagem;
 
-    public Pet(CreatePet dados) {
+    public Pet(CreatePetDTO dados) {
         this.ativo = true;
         this.usuario = dados.usuario();
         this.nome = dados.nome();
@@ -37,7 +37,19 @@ public class Pet {
         this.imagem = dados.imagem();
     }
 
-    public void atualizarInformacoes(UpdatePet dados) {
+    public Pet(Long id, Boolean ativo, String nome, String descricao, Boolean adotado, Integer idade, String imagem,
+               Usuario usuario){
+        this.id = id;
+        this.ativo = ativo;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.adotado = adotado;
+        this.idade = idade;
+        this.imagem = imagem;
+        this.usuario = usuario;
+    }
+
+    public void atualizarInformacoes(UpdatePetDTO dados) {
         if (dados.usuario() != null) {
             this.usuario = dados.usuario();
         }
