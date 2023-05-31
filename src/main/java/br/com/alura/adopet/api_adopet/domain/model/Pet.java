@@ -37,6 +37,18 @@ public class Pet {
         this.imagem = dados.imagem();
     }
 
+    public Pet(Long id, Boolean ativo, String nome, String descricao, Boolean adotado, Integer idade, String imagem,
+               Usuario usuario){
+        this.id = id;
+        this.ativo = ativo;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.adotado = adotado;
+        this.idade = idade;
+        this.imagem = imagem;
+        this.usuario = usuario;
+    }
+
     public void atualizarInformacoes(UpdatePetDTO dados) {
         if (dados.usuario() != null) {
             this.usuario = dados.usuario();

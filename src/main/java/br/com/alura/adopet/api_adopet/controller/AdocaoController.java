@@ -7,6 +7,7 @@ import br.com.alura.adopet.api_adopet.application.DTOs.adocao.UpdateAdocaoDTO;
 import br.com.alura.adopet.api_adopet.domain.model.Adocao;
 import br.com.alura.adopet.api_adopet.domain.interfaces.AdocaoRepository;
 import br.com.alura.adopet.api_adopet.domain.interfaces.PetRepository;
+import br.com.alura.adopet.api_adopet.domain.services.AdocaoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,13 @@ public class AdocaoController {
     private AdocaoRepository repository;
     @Autowired
     private PetRepository petRepository;
+    @Autowired
+    private AdocaoService adocaoService;
 
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid CreateAdocaoDTO dados, UriComponentsBuilder uriBuilder) {
-        var pet = petRepository.getReferenceById(dados.pet().getId());
-        if(pet.getAdotado()){
-            return ResponseEntity.badRequest().body("Não foi possível realizar a adoção," +
-                    " pois o pet informado já foi adotado.");
-        }
-        pet.adotar();
-        var adocao = new Adocao(dados);
-        repository.save(adocao);
+        var adocao = adocaoService.cadastrar(dados);
         var uri = uriBuilder.path("/adocoes/{id}").buildAndExpand(adocao.getId()).toUri();
         return ResponseEntity.created(uri).body(new GetAdocaoDTO(adocao));
     }

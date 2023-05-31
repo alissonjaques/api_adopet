@@ -5,7 +5,7 @@ import br.com.alura.adopet.api_adopet.application.DTOs.usuario.GetAllUsuarioDTO;
 import br.com.alura.adopet.api_adopet.application.DTOs.usuario.GetUsuarioDTO;
 import br.com.alura.adopet.api_adopet.application.DTOs.usuario.UpdateUsuarioDTO;
 import br.com.alura.adopet.api_adopet.domain.interfaces.UsuarioRepository;
-import br.com.alura.adopet.api_adopet.domain.model.Usuario;
+import br.com.alura.adopet.api_adopet.domain.services.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,18 +23,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository repository;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid CreateUsuarioDTO dados, UriComponentsBuilder uriBuilder) {
-        if (!dados.senha().equals(dados.confirmacaoSenha())) {
-            return ResponseEntity.badRequest().body("A senha e sua confirmação não conferem!");
-        }
-        var abrigo = new Usuario(dados);
-        abrigo.setSenha(BCrypt.hashpw(abrigo.getSenha(), BCrypt.gensalt()));
-        repository.save(abrigo);
-        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(abrigo.getId()).toUri();
-        return ResponseEntity.created(uri).body(new GetUsuarioDTO(abrigo));
+        var usuario = usuarioService.cadastrar(dados);
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new GetUsuarioDTO(usuario));
     }
 
     @GetMapping

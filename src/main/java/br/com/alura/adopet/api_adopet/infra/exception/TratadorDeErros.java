@@ -1,5 +1,6 @@
 package br.com.alura.adopet.api_adopet.infra.exception;
 
+import br.com.alura.adopet.api_adopet.domain.exceptions.ValidacaoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,9 +20,15 @@ public class TratadorDeErros {
         var erros = ex.getFieldErrors();
         return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());
     }
+
     private record DadosErroValidacao(String campo, String mensagem) {
         public DadosErroValidacao(FieldError erro){
             this(erro.getField(),erro.getDefaultMessage());
         }
+    }
+
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

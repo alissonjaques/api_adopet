@@ -45,6 +45,12 @@ public class Usuario implements UserDetails {
         this.endereco = new Endereco(dados.endereco());
     }
 
+    public Usuario(Long id, String nome, String email){
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+    }
+
     public void atualizarInformacoes(UpdateUsuarioDTO dados) {
         if (dados.perfil() != null) {
             this.perfil = dados.perfil();
