@@ -7,6 +7,7 @@ public record GetAllPetDTO(Long id, String nome, String descricao, Boolean adota
                            Usuario usuario) {
     public GetAllPetDTO(Pet pet){
         this(pet.getId(), pet.getNome(), pet.getDescricao(), pet.getAdotado(), pet.getIdade(), pet.getImagem(),
-                pet.getUsuario());
+                new Usuario(pet.getUsuario().getId(),pet.getUsuario().getNome(),pet.getUsuario().getEmail())
+        );
     }
 }
